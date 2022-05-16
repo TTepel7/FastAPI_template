@@ -14,9 +14,3 @@ with Session(bind=engine) as session:
     session.add_all([cat1, cat2, cat3, prod1, prod2, prod3])
     session.commit()
 
-    # product_category1 = models.product_category(product_id=prod1.id, category_id=cat1.id)
-    # product_category2 = models.product_category(product_id=prod2.id, category_id=cat2.id)
-    # product_category3 = models.product_category(product_id=prod3.id, category_id=cat3.id)
-    #
-    # session.add_all([product_category1, product_category2, product_category3])
-    # session.commit()
