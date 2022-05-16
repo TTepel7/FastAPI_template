@@ -1,0 +1,22 @@
+# вставка начальных данных
+from sqlalchemy.orm import Session
+from database import engine
+import models
+
+with Session(bind=engine) as session:
+    cat1 = models.Category(name='Еда', description='Вкусная, для людей')
+    cat2 = models.Category(name='Вода', description='Без вкуса, для людей')
+    cat3 = models.Category(name='Одежда', description='Без стиля, для людей')
+
+    prod1 = models.Product(name='Дошик', description='Не вкусный, для студентов', price=66.5,categories=[cat1])
+    prod2 = models.Product(name='Святой источник', description='Обычная вода, для людей', price=33.4,categories=[cat2])
+    prod3 = models.Product(name='Кепка ОДМО', description='Специально для ОДМОшников', price=350.0,categories=[cat3])
+    session.add_all([cat1, cat2, cat3, prod1, prod2, prod3])
+    session.commit()
+
+    # product_category1 = models.product_category(product_id=prod1.id, category_id=cat1.id)
+    # product_category2 = models.product_category(product_id=prod2.id, category_id=cat2.id)
+    # product_category3 = models.product_category(product_id=prod3.id, category_id=cat3.id)
+    #
+    # session.add_all([product_category1, product_category2, product_category3])
+    # session.commit()
