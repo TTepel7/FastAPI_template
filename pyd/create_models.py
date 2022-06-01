@@ -1,6 +1,7 @@
 from pydantic import BaseModel, Field
 from typing import List
 
+
 # тут модели которые используются при создании/редактировании сущностей
 class CategoryCreate(BaseModel):
     name: str = Field(..., max_length=255, example='Еда')
@@ -16,6 +17,14 @@ class ProductCreate(BaseModel):
     price: int = Field(..., gt=0, example=99.95)
 
     category_ids: List[int] = None
+
+    class Config:
+        orm_mode = True
+
+
+class CreateUser(BaseModel):
+    username: str = Field(..., max_length=255, example='Колбаса')
+    password: str = Field(..., max_length=255, example='Колбаса')
 
     class Config:
         orm_mode = True

@@ -29,3 +29,11 @@ class Product(Base):
 
     # backref автоматически делает связь в другой таблице
     categories = relationship("Category", secondary="product_category", backref="products")
+
+
+class User(Base):
+    __tablename__ = "users"
+
+    id = Column(Integer, primary_key=True)
+    username = Column(String(255))
+    password = Column(String(255))

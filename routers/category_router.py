@@ -2,6 +2,7 @@ from fastapi import APIRouter, Depends, HTTPException
 from sqlalchemy.orm import Session
 from typing import List
 import models
+from auth import AuthHandler
 from database import get_db
 import pyd
 
@@ -10,6 +11,8 @@ router = APIRouter(
     tags=["category"],
 )
 
+auth_handler = AuthHandler()
+# для защиты маршрута нужно добавить username=Depends(auth_handler.auth_wrapper) в входные аргументы маршрута
 
 # получение всех категорий
 @router.get("/", response_model=List[pyd.CategorySchema])
@@ -28,7 +31,8 @@ async def get_category_by_id(category_id: int, db: Session = Depends(get_db)):
 
 # получение категории по id
 @router.post("/", response_model=pyd.CategorySchema)
-async def create_category(category_input: pyd.CategoryCreate, db: Session = Depends(get_db)):
+async def create_category(category_input: pyd.CategoryCreate, username=Depends(auth_handler.auth_wrapper),
+                          db: Session = Depends(get_db)):
     # автозаполнение  всех полей
     cat_db = models.Category(
         **category_input.dict()

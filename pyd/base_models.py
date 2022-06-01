@@ -22,3 +22,11 @@ class ProductBase(BaseModel):
 
     class Config:
         orm_mode = True
+
+
+class BaseUser(BaseModel):
+    id: int = Field(None, gt=0, example=1)
+    username: str = Field(..., max_length=255, example='Колбаса')
+
+    class Config:
+        orm_mode = True
